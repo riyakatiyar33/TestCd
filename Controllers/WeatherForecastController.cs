@@ -22,5 +22,13 @@ namespace TestCD.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("add")]
+        public IActionResult AddNumbers(int firstNumber, int secondNumber)
+        {
+            int result = firstNumber + secondNumber;
+
+            return Ok(result);
+        }
     }
 }
