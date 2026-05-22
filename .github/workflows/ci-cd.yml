@@ -9,18 +9,24 @@ on:
     branches:
       - main
 
+env:
+  DOTNET_VERSION: '10.0.x'
+
 jobs:
-  build:
+  build-test-and-sync:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup .NET 10 SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore NuGet packages
         run: dotnet restore
@@ -34,8 +40,9 @@ jobs:
       - name: Push code to deploy repository
         if: github.event_name == 'push'
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "riyakatiyar33"
+          git config user.email "riyakatiyar33@gmail.com"
 
+          git remote remove deploy || true
           git remote add deploy https://x-access-token:${{ secrets.DEPLOY_REPO_TOKEN }}@github.com/riyakatiyar33/TestCd-Deploy.git
           git push deploy main --force
