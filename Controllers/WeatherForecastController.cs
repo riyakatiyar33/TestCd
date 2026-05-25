@@ -30,7 +30,7 @@ namespace TestCD.Controllers
 
             return Ok(result);
         }
-        // This method subtracts two numbers and returns the result as an HTTP response.
+
         [HttpGet("subtract")]
         public IActionResult SubtractNumbers(int firstNumber, int secondNumber)
         {
